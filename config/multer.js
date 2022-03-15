@@ -2,7 +2,7 @@ const multer = require('multer')
 const path = require('path')
 const imageExt = ['.png','.jpeg','.jpg']
 const videoExt = ['.mp4','.mkv','.ts','.wmv','.avi','.mov']
-const multerPath = multer({
+exports.module = multer({
 storage: multer.diskStorage(),
 fileFilter: (req,file,cb)=>{
     // get file extention
@@ -14,6 +14,4 @@ fileFilter: (req,file,cb)=>{
        return cb(new Error("File type not supported"),false)
    }
 }
-})
-
-exports.module = multerPath
+});
