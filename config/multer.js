@@ -2,10 +2,11 @@ const multer = require('multer')
 const path = require('path')
 const imageExt = ['.png','.jpeg','.jpg']
 const videoExt = ['.mp4','.mkv','.ts','.wmv','.avi','.mov']
-exports.module = multer({
-storage: multer.diskStorage(),
+upload = multer({
+storage: multer.diskStorage({}),
 fileFilter: (req,file,cb)=>{
     // get file extention
+    console.log("I am working")
   let filext = path.extname(file.originalname);
    if(videoExt.includes(filext) || imageExt.includes(filext)){
        return cb(null,true)
@@ -15,3 +16,5 @@ fileFilter: (req,file,cb)=>{
    }
 }
 });
+
+module.exports = upload
