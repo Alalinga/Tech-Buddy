@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const User = require('../models/schemas')
 
 const passportAuthenticate = (passport) => {
-
+    
     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticate))
 
     passport.serializeUser((user, done) => done(null, user.id))
@@ -35,7 +35,7 @@ const authenticate = async (username, password, done) => {
 
         }
     } catch (error) {
-        //console.log("At authentication try catch Catching Error " + error)
+        console.log("At authentication try catch Catching Error " + error)
         done(error)
     }
 
