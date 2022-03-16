@@ -8,8 +8,6 @@ const checkAuthentication = require('../authentication/checkAuthentication')
 const passport = require('passport');
 const User = require('../models/schemas');
 const multer = require('multer')
-const uploadFileTo = multer({ dest: process.cwd() + '/public/images' })
-const uploader = multer({})
 
 
 passportAuthenticate(passport)
