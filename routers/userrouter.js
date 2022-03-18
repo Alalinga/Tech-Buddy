@@ -6,15 +6,20 @@ const passportAuthenticate = require('../authentication/authenticate');
 const checkAuthentication = require('../authentication/checkAuthentication')
 const passport = require('passport');
 const User = require('../models/schemas');
-const { uploadFile, uploadBigFile, deleteImage, deleteVideo } = require('../models/operations.js');
+const { uploadFile, uploadBigFile, deleteImage, deleteVideo, getAllVideos, getSingleVideo, getAllImages, getSingleImage } = require('../models/operations.js');
+
 
 
 passportAuthenticate(passport)
 route.post('/login', passport.authenticate('local', {}), (req, res) => {
     if (!req.isAuthenticated) return res.json(req.authInfo)
-    return res.json({ user: req.user, isAuthenticated: req.isAuthenticated() })
+    return res.json({ user: req.user.name, isAuthenticated: req.isAuthenticated() })
 });
 
+route.delete('/logout',(req, res)=>{
+    req.logOut()
+    return res.json({message:"Logged Out ",isAuthenticated:req.isAuthenticated()})
+})
 route.post('/create-accounts', async (req, res) => {
     const encryptedPassword = await bcypt.hash(req.body.password, 10)
     try {
@@ -28,7 +33,7 @@ route.post('/create-accounts', async (req, res) => {
             return res.json({ user: data.username })
         });
     } catch (e) {
-        res.send(e)
+      return res.json({error: e})
     }
 });
 
@@ -64,19 +69,47 @@ route.post('/upload-videos', checkAuthentication, upload.array("video"), async (
     }
 });
 
-route.delete('/delete-video/:id', checkAuthentication, async (req, res) => {
-    console.log(req.params.id)
-    if (req.params.id) {
-        const results = await deleteVideo(req.params.id, req.user.id)
+route.delete('/delete-video/:name', checkAuthentication, async (req, res) => {
+    try{
+    if (req.params.name) {
+        const results = await deleteVideo(req.params.name, req.user._id)
         return res.json(results)
     }
+    return res.json({error: "Video name is required in the parameter!"})
+}catch(e){
+    return res.json({error:" error occured "+ e})
+}
 })
 
+route.get('/videos',checkAuthentication, async (req,res)=>{
+    try{
+       const response = await getAllVideos(req.user._id)
+       return res.json({response:response})
 
-// Images routes
+    }catch(e){
+        return res.json({error:e})
+    }
+
+});
+route.get('/videos/:name',checkAuthentication, async (req,res)=>{
+    try{
+        if(req.params.name){
+        const response =  await getSingleVideo(req.user._id,req.params.name)
+        return res.json({response: response})
+        }
+        return res.json({error: "Video name is required in the parameter"})
+    }catch(e){
+        return res.json({error: e})
+    }
+    
+});
 
 
-// upload Single Image
+
+
+/**Images routes */ 
+
+// upload  Image(s)
 route.post('/upload-image', checkAuthentication, upload.array('image'), async (req, res) => {
     try {
         if (req.files) {
@@ -95,34 +128,43 @@ route.post('/upload-image', checkAuthentication, upload.array('image'), async (r
     }
 })
 
-
-// get single inage
-route.get('/images/:id', (req, res, next) => {
-    try {
-        // const response = await cloudinary.upload.upload(req.file.path)
-        res.json(req.file)
-
-    } catch (e) {
-        res.json(e)
-    }
-})
-
 //  get all Images
-route.get('/images', (req, res, next) => {
-    try {
-        // const response = await cloudinary.upload.upload(req.file.path)
-        res.json(req.file)
+route.get('/images',checkAuthentication, async (req,res)=>{
+    try{
+       const response = await getAllImages(req.user._id)
+       return res.json({response:response})
 
-    } catch (e) {
-        res.json(e)
+    }catch(e){
+        return res.json({error:e})
     }
-})
-route.delete('/delete-image/:id', checkAuthentication, async (req, res) => {
-    console.log(req.params.id)
-    if (req.params.id) {
-        const results = await deleteImage(req.params.id, req.user.id)
+
+});
+
+// get single image by name
+route.get('/images/:name',checkAuthentication, async (req,res)=>{
+    try{
+        if(req.params.name){
+        const response =  await getSingleImage(req.user._id,req.params.name)
+        return res.json({response: response})
+        }
+        return res.json({error:"Image name is require in the parameter"})
+    }catch(e){
+        return res.json({error: e})
+    }
+    
+});
+
+// delete single image by name
+route.delete('/delete-image/:name', checkAuthentication, async (req, res) => {
+    try{
+    if (req.params.name) {
+        const results = await deleteImage(req.params.name, req.user._id)
         return res.json(results)
     }
+    return res.json({error:"Image name is required in the parameter "})
+}catch(e){
+    return res.json({error:e})
+}
 })
 
 module.exports = route
