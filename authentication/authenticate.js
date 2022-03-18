@@ -22,7 +22,7 @@ const passportAuthenticate = (passport) => {
 const authenticate = async (username, password, done) => {
     //console.log("At authentication, credemttials: " + username, password)
     const user = await User.findOne({ email: username })
-    if (!user) return console.log("No User")   //done(null,false,{message:"No user found with such email "+username})
+    if (!user) return done(null,false,{message:"No user found with such email "+username})
 
     try {
        // console.log("At authentication try catch")
@@ -35,7 +35,6 @@ const authenticate = async (username, password, done) => {
 
         }
     } catch (error) {
-        console.log("At authentication try catch Catching Error " + error)
         done(error)
     }
 
