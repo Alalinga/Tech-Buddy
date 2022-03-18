@@ -2,16 +2,16 @@ const express = require('express');
 const upload = require('../config/multer')
 const route = express.Router();
 const bcypt = require('bcrypt');
-const cloudinary = require('../config/cloudinary')
 const passportAuthenticate = require('../authentication/authenticate');
 const checkAuthentication = require('../authentication/checkAuthentication')
 const passport = require('passport');
 const User = require('../models/schemas');
-const multer = require('multer')
+const { uploadFile, uploadBigFile, deleteImage, deleteVideo } = require('../models/operations.js');
 
 
 passportAuthenticate(passport)
 route.post('/login', passport.authenticate('local', {}), (req, res) => {
+    if (!req.isAuthenticated) return res.json(req.authInfo)
     return res.json({ user: req.user, isAuthenticated: req.isAuthenticated() })
 });
 
@@ -34,59 +34,64 @@ route.post('/create-accounts', async (req, res) => {
 
 
 //  Videos routes
-route.post('/upload-videos', upload.single("video"), (req, res, next) => {
+route.post('/upload-videos', checkAuthentication, upload.array("video"), async (req, res, next) => {
     try {
-        // const response = await cloudinary.upload.upload(req.file.path)
+        if (req.files) {
 
-        res.json(req.file)
+            const results = [];
+            let numberOfVideos = 0
+            for (video of req.files) {
+                numberOfVideos++
+                if (parseInt(video.size) <= 100000000) {
+
+                    const options = { resource_type: "video", folder: `techBuddy/${req.user.username}/videos/` }
+                    const response = await uploadFile(video.path, options, req.user._id)
+                    results.push(response)
+                    //return res.json({ response: response })
+                } else {
+
+                    const options = { resource_type: "video", chunk_size: 6000000, folder: `techBuddy/${req.user.username}/videos/` }
+                    const response = uploadBigFile(video.path, options, req.user._id)
+                    results.push(response)
+                }
+
+            }
+            return res.json({ response: results.flat(), message: "Successfully uploaded " + numberOfVideos + " video(s)" })
+        }
 
     } catch (e) {
-        res.json(e)
+        return res.json(e)
     }
 });
 
-route.get('/vedios', async (req, res, next) => {
-
+route.delete('/delete-video/:id', checkAuthentication, async (req, res) => {
+    console.log(req.params.id)
+    if (req.params.id) {
+        const results = await deleteVideo(req.params.id, req.user.id)
+        return res.json(results)
+    }
 })
 
 
 // Images routes
-route.post('/upload-images', checkAuthentication, uploader.array('image'), (req, res) => {
 
-    if (req.files) {
-        // const response = await cloudinary.uploader.upload(req.file.path,{
-        //     folder:`techBuddy/${req.user}/`
-        // })
-
-        res.json("ok I resive somth => " + req.files + " auth " + req.user._id)
-
-    } else {
-        res.json("something went wrong" + req.files)
-    }
-});
 
 // upload Single Image
-route.post('/upload-single-image', checkAuthentication, upload.single('image'), async (req, res) => {
+route.post('/upload-image', checkAuthentication, upload.array('image'), async (req, res) => {
     try {
-        if (req.file) {
-            console.log("I am in")
-            // , { folder: `techBuddy/${req.user.username}/` }
-            const response = await cloudinary.uploader.upload(req.file.path, { folder: `techBuddy/${req.user.username}/images` });
-
-            const user = await User.findById(req.user._id)
-            if (user) {
-                user.images.push({ name: response.original_filename, url: response.secure_url,cloundinary_key:response.public_id })
-                user.save((error,results)=>{
-                    if(error)return console.log(error)
-                    console.log("data saved")
-                    return res.json(results)
-                })
-                // res.json(response)
+        if (req.files) {
+            let results = [];
+            let numberOfImages = 0
+            for (file of req.files) {
+                numberOfImages++
+                const response = await uploadFile(file.path, { folder: `techBuddy/${req.user.username}/images/` }, req.user._id)
+                results.push(response)
             }
 
+            return res.json({ response: results.flat(), message: "Successfully uploaded " + numberOfImages + " image(s)" })
         }
     } catch (e) {
-        new Error(e)
+        return res.json(e)
     }
 })
 
@@ -101,6 +106,7 @@ route.get('/images/:id', (req, res, next) => {
         res.json(e)
     }
 })
+
 //  get all Images
 route.get('/images', (req, res, next) => {
     try {
@@ -109,6 +115,13 @@ route.get('/images', (req, res, next) => {
 
     } catch (e) {
         res.json(e)
+    }
+})
+route.delete('/delete-image/:id', checkAuthentication, async (req, res) => {
+    console.log(req.params.id)
+    if (req.params.id) {
+        const results = await deleteImage(req.params.id, req.user.id)
+        return res.json(results)
     }
 })
 
