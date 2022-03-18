@@ -5,11 +5,13 @@ const imageSchema = new mongoose.Schema({
     name: String,
     url: String,
     cloundinary_key: String,
+    path: String
 });
 const videoSchema = new mongoose.Schema({
     name: String,
     url: String,
     cloundinary_key: String,
+    path: String
 });
 const userSchema = new mongoose.Schema({
     username: String,
