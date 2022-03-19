@@ -10,9 +10,33 @@ const session = require('express-session')
 const passport = require('passport')
 const route = require('./routers/userrouter')
 const dbConnection = require('./config/dbconnection')
+const swaggerJSDoc = require('swagger-jsdoc');
+const  SwaggerUI  = require ('swagger-ui-express');
+
 const app = express()
 const url = process.env['MONGO_URI']
-const PORT = process.env["PORT"] || 5000
+const PORT = process.env["PORT"] || 5000;
+
+const option = {
+    definition:{
+      openapi: '3.0.0',
+      infor:{
+        title:  "Tech Buddy API",
+        version : "1.0",
+        description:"application program interface (API) that will allow user to upload and download assets (images and videos) to and from a content management platform (Cloudinary)."
+      },
+      servers:[
+        {url:"http://localhost:5000"},
+        // {url:"https://alalinga.herokuapp.com"}
+      ]
+      
+    },
+    apis:["./routers/userrouter.js"]
+  };
+
+  const swagggerSpecs = swaggerJSDoc(option);
+
+
 // db connection function call
 dbConnection(mongoose,url)
 
@@ -41,6 +65,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/api', route);
+app.use('/api/tech-buddy/docs',SwaggerUI.serve, SwaggerUI.setup(swagggerSpecs))
 
 /** -- end of setting middlewares */
 
