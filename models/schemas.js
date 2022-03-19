@@ -14,9 +14,9 @@ const videoSchema = new mongoose.Schema({
     path: String
 });
 const userSchema = new mongoose.Schema({
-    username: String,
-    email: String,
-    password: String,
+    username:{type: String,unique:true, required:true},
+    email: {type: String,unique:true, required:true},
+    password: {type: String, required:true},
     videos:[videoSchema],
     images:[imageSchema]
 
