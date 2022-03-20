@@ -5,13 +5,17 @@ const imageSchema = new mongoose.Schema({
     name: String,
     url: String,
     cloundinary_key: String,
-    path: String
+    path: String,
+    description: String,
+    date: { type: Date,default: Date.now}
 });
 const videoSchema = new mongoose.Schema({
     name: String,
     url: String,
     cloundinary_key: String,
-    path: String
+    path: String,
+    description: String,
+    date: {type: Date,default: Date.now}
 });
 const userSchema = new mongoose.Schema({
     username:{type: String,unique:true, required:true},
