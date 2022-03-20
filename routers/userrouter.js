@@ -8,18 +8,25 @@ const passport = require('passport');
 const User = require('../models/schemas');
 const { uploadFile, uploadBigFile, deleteImage, deleteVideo, getAllVideos, getSingleVideo, getAllImages, getSingleImage } = require('../models/operations.js');
 
-
-
 passportAuthenticate(passport)
+
+
+
+
+
 route.post('/login', passport.authenticate('local', {}), (req, res) => {
     if (!req.isAuthenticated) return res.json(req.authInfo)
     return res.json({ user: req.user.name, isAuthenticated: req.isAuthenticated() })
 });
 
+
+
 route.delete('/logout',(req, res)=>{
     req.logOut()
     return res.json({message:"Logged Out ",isAuthenticated:req.isAuthenticated()})
-})
+});
+
+
 route.post('/create-accounts', async (req, res) => {
     const encryptedPassword = await bcypt.hash(req.body.password, 10)
     try {
@@ -29,17 +36,17 @@ route.post('/create-accounts', async (req, res) => {
             email: req.body.email
         });
         createUser.save((err, data) => {
-            if (err) return console.log("Error occured => " + err)
-            return res.json({ user: data.username })
+            if (err) return res.json({ error: err,statusCode: 500 }) 
+            return res.json({ user: data.username,statusCode: 201 })
         });
     } catch (e) {
-      return res.json({error: e})
+      return res.json({error: e, statuCode: status(400)})
     }
 });
 
 
 //  Videos routes
-route.post('/upload-videos', checkAuthentication, upload.array("video"), async (req, res, next) => {
+route.post('/videos', checkAuthentication, upload.array("video"), async (req, res, next) => {
     try {
         if (req.files) {
 
@@ -69,7 +76,7 @@ route.post('/upload-videos', checkAuthentication, upload.array("video"), async (
     }
 });
 
-route.delete('/delete-video/:name', checkAuthentication, async (req, res) => {
+route.delete('/videos/:name', checkAuthentication, async (req, res) => {
     try{
     if (req.params.name) {
         const results = await deleteVideo(req.params.name, req.user._id)
@@ -110,7 +117,7 @@ route.get('/videos/:name',checkAuthentication, async (req,res)=>{
 /**Images routes */ 
 
 // upload  Image(s)
-route.post('/upload-image', checkAuthentication, upload.array('image'), async (req, res) => {
+route.post('/images', checkAuthentication, upload.array('image'), async (req, res) => {
     try {
         if (req.files) {
             let results = [];
@@ -155,7 +162,7 @@ route.get('/images/:name',checkAuthentication, async (req,res)=>{
 });
 
 // delete single image by name
-route.delete('/delete-image/:name', checkAuthentication, async (req, res) => {
+route.delete('/images/:name', checkAuthentication, async (req, res) => {
     try{
     if (req.params.name) {
         const results = await deleteImage(req.params.name, req.user._id)
