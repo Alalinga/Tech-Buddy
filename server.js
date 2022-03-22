@@ -22,7 +22,7 @@ const swagggerSpecs = swaggerJSDoc(swagger);
 
 
 // db connection function call
-dbConnection(mongoose, url)
+dbConnection()
 
 /**  setting middlewares */
 // enabling body parser to accept post form data
@@ -57,3 +57,5 @@ app.use('/api/tech-buddy/docs', SwaggerUI.serve, SwaggerUI.setup(swagggerSpecs))
 const listener = app.listen(PORT, () => {
   console.log("App listerning to port", "http://localhost:" + listener.address().port)
 })
+
+module.exports =app
