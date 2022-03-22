@@ -1,7 +1,7 @@
 const cloudinary = require('../config/cloudinary');
 const User = require('../models/schemas')
 
-const uploadFile = async (path, options, userId) => {
+const uploadFile = async (path, options, userId,description) => {
 
     const results = await cloudinary.uploader.upload(path, options);
     if (!results.public_id) return { error: "Error occured! Check the file path and try again" }
@@ -10,11 +10,11 @@ const uploadFile = async (path, options, userId) => {
         const name = results.public_id.split('/')
         const path = name.slice(0, -1)
         if (results.resource_type !== 'video') {
-            user.images.push({ name: name.slice(-1).toString(), url: results.secure_url, cloundinary_key: results.public_id, path: path.join('/') })
+            user.images.push({ name: name.slice(-1).toString(), url: results.secure_url, cloundinary_key: results.public_id, path: path.join('/'),description:description })
             const answer = await user.save()
             return answer.images.slice(-1)
         }
-        user.videos.push({ name: name.slice(-1).toString(), url: results.secure_url, cloundinary_key: results.public_id, path: path.join('/') })
+        user.videos.push({ name: name.slice(-1).toString(), url: results.secure_url, cloundinary_key: results.public_id, path: path.join('/'),description:description })
         const answer = await user.save()
         return answer.videos.slice(-1)
 
@@ -32,7 +32,7 @@ const uploadBigFile = async (path, options, userId) => {
     if (user) {
         const name = results.public_id.split('/')
         const path = name.slice(0, -1)
-        user.images.push({ name: name.slice(-1).toString(), url: results.secure_url, cloundinary_key: results.public_id, path: path.join('/') })
+        user.images.push({ name: name.slice(-1).toString(), url: results.secure_url, cloundinary_key: results.public_id, path: path.join('/'),description:description })
         const answer = await user.save()
         return answer.images.slice(-1)
 
@@ -47,8 +47,7 @@ const deleteImage = async (path, userId) => {
     if (user) {
         try {
             const image = user.images.filter(ele => ele.name == path)
-
-            if (!image.length) return { error: "Image with name " + path + " not found" }
+            if (!image.length) return { notFound: "Image with name " + path + " not found" }
             const response = await cloudinary.uploader.destroy(image[0].cloundinary_key)
             if (response.result === 'ok') {
                 try {
@@ -75,7 +74,7 @@ const deleteVideo = async (path, userId) => {
         try {
             const video = user.videos.filter(ele => ele.name == path)
             
-            if (!video.length) return { error: "Video with name " + path + " not found" }
+            if (!video.length) return { notFound: "Video with name " + path + " not found" }
             const response = await cloudinary.uploader.destroy(video[0].cloundinary_key, { resource_type: 'video' })
             if (response.result === 'ok') {
                 try {
@@ -108,7 +107,6 @@ const getSingleImage = async (userId,imageId) => {
     try {
        const user  =await User.findById(userId)
        return user.images.filter(ele=>ele.name===imageId)
-
     } catch (e) {
         return { error:"error occured "+ e }
     }
@@ -128,7 +126,7 @@ const getAllVideos = async (userId) => {
 const getSingleVideo = async (userId,filename) => {
     try {
        const user  =await User.findById(userId)
-       return user.videos.filter(ele=>ele.name===filename)
+       return user.videos.filter(ele=>ele.name===filename);
 
     } catch (e) {
         return { error:"error occured "+ e }
@@ -146,6 +144,9 @@ const updateFile = async (path, user) => {
     }
 
 }
+const add = async ()=>{
+    return await 3+ 3;
+}
 
 
 module.exports =
@@ -157,5 +158,6 @@ module.exports =
     getAllImages,
     getAllVideos,
     getSingleImage,
-    getSingleVideo
+    getSingleVideo,
+    add
 }
