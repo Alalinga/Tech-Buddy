@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const imageSchema = new mongoose.Schema({
     name: String,
     url: String,
-    cloundinary_key: String,
+    cloudinary_key: String,
     path: String,
     description: String,
     date: { type: Date,default: Date.now}
