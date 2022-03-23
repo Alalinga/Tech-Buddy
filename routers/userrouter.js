@@ -97,19 +97,19 @@ route.delete('/videos/:name', checkAuthentication, async (req, res) => {
 
             return res.status(200).json(results)
         }
-        return res.json({ error: "Video name is required in the parameter!" })
+        return res.status(406).json({ error: "Video name is required in the parameter!" })
     } catch (e) {
-        return res.json({ error: " error occured " + e })
+        return res.status(400).json({ error: " error occured " + e })
     }
 });
 
 route.get('/videos', checkAuthentication, async (req, res) => {
     try {
         const response = await getAllVideos(req.user._id)
-        return res.json({ response: response })
+        return res.status(200).json(response)
 
     } catch (e) {
-        return res.json({ error: e })
+        return res.status(400).json({ error: e })
     }
 
 });
@@ -117,12 +117,12 @@ route.get('/videos/:name', checkAuthentication, async (req, res) => {
     try {
         if (req.params.name) {
             const response = await getSingleVideo(req.user._id, req.params.name)
-            if (response.length === 0) return res.status(404).send("not found")
-            return res.json({ response: response })
+            if (response.length === 0) return res.status(404).json("not found")
+            return res.status(200).json(response)
         }
-        return res.json({ error: "Video name is required in the parameter" })
+        return res.status(406).json({ error: "Video name is required in the parameter" })
     } catch (e) {
-        return res.json({ error: e })
+        return res.status(400).json({ error: e +"Bad request" })
     }
 
 });
@@ -137,17 +137,25 @@ route.post('/images', checkAuthentication, upload.array('image'), async (req, re
     try {
         if (req.files) {
             let results = [];
+            let error = [];
             let numberOfImages = 0
+            let failureCounter = 0
             for (file of req.files) {
-                numberOfImages++
+                
                 const response = await uploadFile(file.path, { folder: `techBuddy/${req.user.username}/images/` }, req.user._id, req.body.description)
+                if(response.error){
+                    error.push(response);
+                    failureCounter++
+                }else{
+                numberOfImages++
                 results.push(response)
+                }
             }
-
-            return res.json({ response: results.flat(), message: "Successfully uploaded " + numberOfImages + " image(s)" })
+           if(error.length>0)return res.status(200).json({ response: results.flat(), success: "Successfully uploaded " + numberOfImages + " image(s)",failed: failureCounter +"image(s) failed to upload",error: error })
+            return res.status(200).json({ response: results.flat(), message: "Successfully uploaded " + numberOfImages + " image(s)" })
         }
     } catch (e) {
-        return res.json(e)
+        return res.status(400).json(e)
     }
 })
 
@@ -168,12 +176,12 @@ route.get('/images/:name', checkAuthentication, async (req, res) => {
     try {
         if (req.params.name) {
             const response = await getSingleImage(req.user._id, req.params.name)
-            if (response.length === 0) return res.status(404).send("not found")
+            if (!response.lengt) return res.status(404).send("not found")
             return res.status(200).json(response)
         }
-        return res.json({ error: "Image name is require in the parameter" })
+        return res.status(406).json({ error: "Image name is require in the parameter" })
     } catch (e) {
-        return res.json({ error: "error occured " + e })
+        return res.status(400).json({ error: "error occured " + e })
     }
 
 });
@@ -186,9 +194,9 @@ route.delete('/images/:name', checkAuthentication, async (req, res) => {
             if (results.notFound) return res.status(404).json(results);
             return res.json(results)
         }
-        return res.json({ error: "Image name is required in the parameter " })
+        return res.status(406).json({ error: "Image name is required in the parameter " })
     } catch (e) {
-        return res.json({ error: e })
+        return res.status(400).json({ error: e })
     }
 });
 
