@@ -3,13 +3,15 @@ const dbConnection = require('../config/dbconnection');
 const chai = require('chai')
 const http = require('chai-http')
 const app = require('../app');
-const fs = require('fs')
+const fs = require('fs');
+const User = require('../models/schemas');
 
 const expect = chai.expect
 chai.use(http)
 const cookie = '';
 let imageName = ''
 let videoName = ''
+let userId = '';
 
 
 
@@ -23,18 +25,23 @@ describe("User routes", function () {
 
     });
 
+    // this.beforeAll( async function(){
+    //    await User.deleteOne({username:"alalinga"})
+    // })
+
 
 
     describe("user accounts creation", function () {
 
         it("POST, Should create User ", function (done) {
             request(app)
-                .post('/api/create-accounts').send({ username: 'alalnga', email: 'alalnga@gmail.com', password: 'alalinga' })
+                .post('/api/create-accounts').send({ username: 'alalinga', email: 'alalinga@gmail.com', password: 'alalinga' })
                 .then((res) => {
+                  
                     expect(res.status).to.equal(201);
                     // console.log(res.body,res.body.username)
                     //expect(res.body).to.equal('object')
-                    expect(res.body.user).to.equal('alalnga');
+                    expect(res.body.user).to.equal('alalinga');
                     done()
                 }).catch((err) => {
 
@@ -104,8 +111,9 @@ describe("User routes", function () {
     /** test cases for Images */
 
     describe("POST, User upload Images", function () {
+        this.timeout(30000)
         it("User should be able to upload single or multiple images", function (done) {
-            this.timeout(20000)
+            
             request(app).post('/api/login').send({ email: 'alalnga@gmail.com', password: 'alalinga' }).then((resp) => {
 
                 request(app).post('/api/images').set("Cookie", resp.header['set-cookie'])
@@ -126,7 +134,7 @@ describe("User routes", function () {
             });
         });
         it("User should NOT be able to upload files that are not Images", function (done) {
-            this.timeout(20000)
+           // this.timeout(20000)
             request(app).post('/api/login').send({ email: 'alalnga@gmail.com', password: 'alalinga' }).then((resp) => {
 
                 request(app).post('/api/images').set("Cookie", resp.header['set-cookie'])
@@ -286,8 +294,9 @@ describe("User routes", function () {
 
 
     describe("POST, User upload Videos", function () {
+        this.timeout(30000)
         it("User should be able to upload single or multiple videos", function (done) {
-            this.timeout(20000)
+            
             request(app).post('/api/login').send({ email: 'alalnga@gmail.com', password: 'alalinga' }).then((resp) => {
 
                 request(app).post('/api/videos').set("Cookie", resp.header['set-cookie'])
@@ -432,8 +441,9 @@ describe("User routes", function () {
                 const name = 'ryntvntrydhpamwkun' // wrong name
                 request(app).get("/api/videos/" + name).set("Cookie", resp.header['set-cookie'])
                     .then((res) => {
+                        
                         expect(res.text).to.include('not found')
-                        expect(res.statusCode).to.equal(404)
+                        expect(res.status).to.equal(404)
 
                         done()
                     }).catch((err) => done(err))
