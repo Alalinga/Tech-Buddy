@@ -46,7 +46,7 @@ http://localhost:5000/api/create-accounts
     
     {
     "user": "member23"
-     }
+    }
 
 
 ## Login
@@ -68,7 +68,7 @@ http://localhost:5000/api/Login
     
     {
     "isAuthenticated": true
-     }
+    }
 
 ## Upload Videos
 
@@ -84,28 +84,28 @@ http://localhost:5000/api/Login
     Content-Type: application/json
     Status: 201 created
 
-{
-    "response": [
-        {
-            "name": "zpnyihkxp0mlkq8ko3ft",
-            "url": "https://res.cloudinary.com/dg4rf5mvl/video/upload/v1648178893/techBuddy/member23/videos/zpnyihkxp0mlkq8ko3ft.mp4",
-            "cloudinary_key": "techBuddy/member23/videos/zpnyihkxp0mlkq8ko3ft",
-            "path": "techBuddy/member23/videos",
-            "_id": "623d36ce220046664888f4de",
-            "date": "2022-03-25T03:28:14.741Z"
-        },
-        {
-            "name": "urr2nt94cctcetgmpg9p",
-            "url": "https://res.cloudinary.com/dg4rf5mvl/video/upload/v1648178924/techBuddy/member23/videos/urr2nt94cctcetgmpg9p.mkv",
-            "cloudinary_key": "techBuddy/member23/videos/urr2nt94cctcetgmpg9p",
-            "path": "techBuddy/member23/videos",
-            "_id": "623d36ee220046664888f4e1",
-            "date": "2022-03-25T03:28:46.210Z"
-        }
-    ],
-    "message": "Successfully uploaded 2 video(s)"
-}
-
+    {
+        "response": [
+            {
+                "name": "zpnyihkxp0mlkq8ko3ft",
+                "url": "https://res.cloudinary.com/dg4rf5mvl/    video/upload/v1648178893/techBuddy/member23/    videos/zpnyihkxp0mlkq8ko3ft.mp4",
+                "cloudinary_key": "techBuddy/member23/videos/    zpnyihkxp0mlkq8ko3ft",
+                "path": "techBuddy/member23/videos",
+                "_id": "623d36ce220046664888f4de",
+                "date": "2022-03-25T03:28:14.741Z"
+            },
+            {
+                "name": "urr2nt94cctcetgmpg9p",
+                "url": "https://res.cloudinary.com/dg4rf5mvl/    video/upload/v1648178924/techBuddy/member23/    videos/urr2nt94cctcetgmpg9p.mkv",
+                "cloudinary_key": "techBuddy/member23/videos/    urr2nt94cctcetgmpg9p",
+                "path": "techBuddy/member23/videos",
+                "_id": "623d36ee220046664888f4e1",
+                "date": "2022-03-25T03:28:46.210Z"
+            }
+        ],
+        "message": "Successfully uploaded 2 video(s)"
+    }
+    
 
 
 ## GET Videos
@@ -122,26 +122,26 @@ http://localhost:5000/api/Login
     Content-Type: application/json
     Status: 200 ok
 
-{
-    "response": [
-        {
-            "name": "zpnyihkxp0mlkq8ko3ft",
-            "url": "https://res.cloudinary.com/dg4rf5mvl/video/upload/v1648178893/techBuddy/member23/videos/zpnyihkxp0mlkq8ko3ft.mp4",
-            "cloudinary_key": "techBuddy/member23/videos/zpnyihkxp0mlkq8ko3ft",
-            "path": "techBuddy/member23/videos",
-            "_id": "623d36ce220046664888f4de",
-            "date": "2022-03-25T03:28:14.741Z"
-        },
-        {
-            "name": "urr2nt94cctcetgmpg9p",
-            "url": "https://res.cloudinary.com/dg4rf5mvl/video/upload/v1648178924/techBuddy/member23/videos/urr2nt94cctcetgmpg9p.mkv",
-            "cloudinary_key": "techBuddy/member23/videos/urr2nt94cctcetgmpg9p",
-            "path": "techBuddy/member23/videos",
-            "_id": "623d36ee220046664888f4e1",
-            "date": "2022-03-25T03:28:46.210Z"
-        }
-    ]
-}
+    {
+        "response": [
+            {
+                "name": "zpnyihkxp0mlkq8ko3ft",
+                "url": "https://res.cloudinary.com/dg4rf5mvl/    video/upload/v1648178893/techBuddy/member23/    videos/zpnyihkxp0mlkq8ko3ft.mp4",
+                "cloudinary_key": "techBuddy/member23/videos/    zpnyihkxp0mlkq8ko3ft",
+                "path": "techBuddy/member23/videos",
+                "_id": "623d36ce220046664888f4de",
+                "date": "2022-03-25T03:28:14.741Z"
+            },
+            {
+                "name": "urr2nt94cctcetgmpg9p",
+                "url": "https://res.cloudinary.com/dg4rf5mvl/    video/upload/v1648178924/techBuddy/member23/    videos/urr2nt94cctcetgmpg9p.mkv",
+                "cloudinary_key": "techBuddy/member23/videos/    urr2nt94cctcetgmpg9p",
+                "path": "techBuddy/member23/videos",
+                "_id": "623d36ee220046664888f4e1",
+                "date": "2022-03-25T03:28:46.210Z"
+            }
+        ]
+    }
 
 
 ## Delete Video
@@ -158,9 +158,9 @@ http://localhost:5000/api/Login
     Content-Type: application/json
     Status: 200 ok
 
-{
-    "success": "Successfully deleted video with name iurpdc3t1ojewelu9hgn"
-}
+    {
+        "success": "Successfully deleted video with name     iurpdc3t1ojewelu9hgn"
+    }
 
 
 
@@ -180,27 +180,27 @@ http://localhost:5000/api/Login
     Content-Type: application/json
     Status: 201 created
 
-{
-    "response": [
-        {
-            "name": "zpnyihkxp0mlkq8ko3ft",
-            "url": "https://res.cloudinary.com/dg4rf5mvl/video/upload/v1648178893/techBuddy/member23/videos/zpnyihkxp0mlkq8ko3ft.png",
-            "cloudinary_key": "techBuddy/member23/images/zpnyihkxp0mlkq8ko3ft",
-            "path": "techBuddy/member23/images",
-            "_id": "623d36ce220046664888f4de",
-            "date": "2022-03-25T03:28:14.741Z"
-        },
-        {
-            "name": "urr2nt94cctcetgmpg9p",
-            "url": "https://res.cloudinary.com/dg4rf5mvl/video/upload/v1648178924/techBuddy/member23/images/urr2nt94cctcetgmpg9p.mkv",
-            "cloudinary_key": "techBuddy/member23/images/urr2nt94cctcetgmpg9p",
-            "path": "techBuddy/member23/images",
-            "_id": "623d36ee220046664888f4e1",
-            "date": "2022-03-25T03:28:46.210Z"
-        }
-    ],
-    "message": "Successfully uploaded 2 images(s)"
-}
+    {
+        "response": [
+            {
+                "name": "zpnyihkxp0mlkq8ko3ft",
+                "url": "https://res.cloudinary.com/dg4rf5mvl/    video/upload/v1648178893/techBuddy/member23/    videos/zpnyihkxp0mlkq8ko3ft.png",
+                "cloudinary_key": "techBuddy/member23/images/    zpnyihkxp0mlkq8ko3ft",
+                "path": "techBuddy/member23/images",
+                "_id": "623d36ce220046664888f4de",
+                "date": "2022-03-25T03:28:14.741Z"
+            },
+            {
+                "name": "urr2nt94cctcetgmpg9p",
+                "url": "https://res.cloudinary.com/dg4rf5mvl/    video/upload/v1648178924/techBuddy/member23/    images/urr2nt94cctcetgmpg9p.mkv",
+                "cloudinary_key": "techBuddy/member23/images/    urr2nt94cctcetgmpg9p",
+                "path": "techBuddy/member23/images",
+                "_id": "623d36ee220046664888f4e1",
+                "date": "2022-03-25T03:28:46.210Z"
+            }
+        ],
+        "message": "Successfully uploaded 2 images(s)"
+    }
 
 
 
@@ -218,26 +218,26 @@ http://localhost:5000/api/Login
     Content-Type: application/json
     Status: 200 ok
 
-{
-    "response": [
-        {
-            "name": "zpnyihkxp0mlkq8ko3ft",
-            "url": "https://res.cloudinary.com/dg4rf5mvl/video/upload/v1648178893/techBuddy/member23/images/zpnyihkxp0mlkq8ko3ft.png",
-            "cloudinary_key": "techBuddy/member23/images/zpnyihkxp0mlkq8ko3ft",
-            "path": "techBuddy/member23/images",
-            "_id": "623d36ce220046664888f4de",
-            "date": "2022-03-25T03:28:14.741Z"
-        },
-        {
-            "name": "urr2nt94cctcetgmpg9p",
-            "url": "https://res.cloudinary.com/dg4rf5mvl/images/upload/v1648178924/techBuddy/member23/videos/urr2nt94cctcetgmpg9p.png",
-            "cloudinary_key": "techBuddy/member23/images/urr2nt94cctcetgmpg9p",
-            "path": "techBuddy/member23/images",
-            "_id": "623d36ee220046664888f4e1",
-            "date": "2022-03-25T03:28:46.210Z"
-        }
-    ]
-}
+    {
+        "response": [
+            {
+                "name": "zpnyihkxp0mlkq8ko3ft",
+                "url": "https://res.cloudinary.com/dg4rf5mvl/    video/upload/v1648178893/techBuddy/member23/    images/zpnyihkxp0mlkq8ko3ft.png",
+                "cloudinary_key": "techBuddy/member23/images/    zpnyihkxp0mlkq8ko3ft",
+                "path": "techBuddy/member23/images",
+                "_id": "623d36ce220046664888f4de",
+                "date": "2022-03-25T03:28:14.741Z"
+            },
+            {
+                "name": "urr2nt94cctcetgmpg9p",
+                "url": "https://res.cloudinary.com/dg4rf5mvl/    images/upload/v1648178924/techBuddy/member23/    videos/urr2nt94cctcetgmpg9p.png",
+                "cloudinary_key": "techBuddy/member23/images/    urr2nt94cctcetgmpg9p",
+                "path": "techBuddy/member23/images",
+                "_id": "623d36ee220046664888f4e1",
+                "date": "2022-03-25T03:28:46.210Z"
+            }
+        ]
+    }
 
 
 ## Delete Images
@@ -254,8 +254,8 @@ http://localhost:5000/api/Login
     Content-Type: application/json
     Status: 200 ok
 
-{
+    {
     "success": "Successfully deleted image with name iurpdc3t1ojewelu9hgn"
-}
+    }
 
 
