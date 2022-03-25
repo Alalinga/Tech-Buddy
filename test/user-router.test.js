@@ -2,7 +2,7 @@ const request = require('supertest');
 const dbConnection = require('../config/dbconnection');
 const chai = require('chai')
 const http = require('chai-http')
-const app = require('../server');
+const app = require('../app');
 const fs = require('fs')
 
 const expect = chai.expect
