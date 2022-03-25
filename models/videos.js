@@ -56,7 +56,7 @@ const getVideoByName = async (req, res) => {
     try {
         if (req.params.name) {
             const response = await getSingleVideo(req.user._id, req.params.name)
-            if (response.length === 0) return res.status(404).json("not found")
+            if (response.notFound) return res.status(404).json("not found")
             return res.status(200).json(response)
         }
         return res.status(406).json({ error: "Video name is required in the parameter" })
@@ -71,7 +71,6 @@ const deleteVideoByName = async (req, res) => {
         if (req.params.name) {
             const results = await deleteVideo(req.params.name, req.user._id)
             if (results.notFound) return res.status(404).json(results);
-
             return res.status(200).json(results)
         }
         return res.status(406).json({ error: "Video name is required in the parameter!" })

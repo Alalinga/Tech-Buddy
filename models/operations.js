@@ -64,7 +64,7 @@ const deleteImage = async (path, userId) => {
             return { error: e }
         }
     }
-    return "user not found" 
+    return {notFound: 'user not found'}
 }
 
 const deleteVideo = async (path, userId) => {
@@ -89,18 +89,18 @@ const deleteVideo = async (path, userId) => {
             return { error:"error occured "+ e }
         }
     }
-    return "user not found"
+    return {notFound: 'user not found'}
 }
 
 const getAllImages = async (userId) => {
     try {
        const user  =await User.findById(userId)
-       if(!user.images.length)return 'no images found'
+       if(!user.images.length)return{notFound: 'no images found'}
        return user.images
        
 
     } catch (e) {
-        return 'user not found'
+        return {notFound: 'user not found'}
     }
 
 }
@@ -108,10 +108,10 @@ const getSingleImage = async (userId,imageId) => {
     try {
        const user  =await User.findById(userId)
        const image = user.images.filter(ele=>ele.name===imageId);
-       if(!image.length) return 'not found'
+       if(!image.length) return{notFound: 'not found'}
        return image
     } catch (e) {
-        return 'user not found'
+        return {notFound: 'user not found'}
     }
 
 }
@@ -119,12 +119,12 @@ const getSingleImage = async (userId,imageId) => {
 const getAllVideos = async (userId) => {
     try {
        const user  = await User.findById(userId)
-       if(!user.videos.length)return 'no videos found'
+       if(!user.videos.length)return{ notFound: 'no videos found'}
        return user.videos
        
 
     } catch (e) {
-        return 'user not found'
+        return {notFound: 'user not found'}
     }
 
 }
@@ -132,10 +132,10 @@ const getSingleVideo = async (userId,filename) => {
     try {
        const user  =await User.findById(userId)
        const video = user.videos.filter(ele=>ele.name===filename);
-       if(!video.length)return 'not found'
+       if(!video.length)return{ notFound: 'not found'}
        return video
     } catch (e) {
-        return 'user not found'
+        return {notFound: 'user not found'}
     }
 
 }

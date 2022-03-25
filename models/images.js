@@ -37,6 +37,7 @@ const uploadImages = (req, res) => {
 const getImages =  async (req, res) => {
     try {
         const response = await getAllImages(req.user._id)
+        if(response.notFound)return res.status(404).json(response)
         return res.status(200).json(response)
 
     } catch (e) {
@@ -50,7 +51,7 @@ const getImageByName = async (req, res) => {
         if (req.params.name) {
             const response = await getSingleImage(req.user._id, req.params.name)
 
-            if (!response.length) return res.status(404).send("not found")
+            if(response.notFound) return res.status(404).send("not found")
             return res.status(200).json(response)
         }
         return res.status(406).json({ error: "Image name is require in the parameter" })
