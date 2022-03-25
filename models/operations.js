@@ -64,7 +64,7 @@ const deleteImage = async (path, userId) => {
             return { error: e }
         }
     }
-    return { error: "User not found" }
+    return "user not found" 
 }
 
 const deleteVideo = async (path, userId) => {
@@ -89,25 +89,29 @@ const deleteVideo = async (path, userId) => {
             return { error:"error occured "+ e }
         }
     }
-    return { error: "User not found" }
+    return "user not found"
 }
 
 const getAllImages = async (userId) => {
     try {
        const user  =await User.findById(userId)
+       if(!user.images.length)return 'no images found'
        return user.images
+       
 
     } catch (e) {
-        return { error: "error occured "+ e }
+        return 'user not found'
     }
 
 }
 const getSingleImage = async (userId,imageId) => {
     try {
        const user  =await User.findById(userId)
-       return user.images.filter(ele=>ele.name===imageId)
+       const image = user.images.filter(ele=>ele.name===imageId);
+       if(!image.length) return 'not found'
+       return image
     } catch (e) {
-        return { error:"error occured "+ e }
+        return 'user not found'
     }
 
 }
@@ -115,20 +119,23 @@ const getSingleImage = async (userId,imageId) => {
 const getAllVideos = async (userId) => {
     try {
        const user  = await User.findById(userId)
+       if(!user.videos.length)return 'no videos found'
        return user.videos
+       
 
     } catch (e) {
-        return { error:"error occured "+ e }
+        return 'user not found'
     }
 
 }
 const getSingleVideo = async (userId,filename) => {
     try {
        const user  =await User.findById(userId)
-       return user.videos.filter(ele=>ele.name===filename);
-
+       const video = user.videos.filter(ele=>ele.name===filename);
+       if(!video.length)return 'not found'
+       return video
     } catch (e) {
-        return { error:"error occured "+ e }
+        return 'user not found'
     }
 
 }
@@ -143,9 +150,6 @@ const updateFile = async (path, user) => {
     }
 
 }
-const add = async ()=>{
-    return await 3+ 3;
-}
 
 
 module.exports =
@@ -157,6 +161,5 @@ module.exports =
     getAllImages,
     getAllVideos,
     getSingleImage,
-    getSingleVideo,
-    add
+    getSingleVideo
 }
