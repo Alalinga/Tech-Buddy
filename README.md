@@ -21,7 +21,7 @@
   example `MONGO_URI=mongodb+srv://username:password@databasename.qtuqn.mongodb.net/table-name?retryWrites=true&w=majority`
 
 ## cloudinary configuration
-    Add your cloudinary details to .env file
+  Add your cloudinary details to .env file
 * CLOUDINARY_NAME
 * CLOUDINARY_API_KEY
 * CLOUDINARY_API_SECRET
@@ -40,7 +40,8 @@
 
 ## Run test
    The test code is located inside the test folder
-   Run `npm test` to execute the test. Note that the test    framework used is [Mocha](https://mochajs.org/)  and [chai]   (https://www.chaijs.com/), you should at least have the    basics knowlodge of the framework before you can fiddle    around the test codes.
+   Run `npm test` to execute the test. Note that the test    framework used is [Mocha](https://mochajs.org/)  and [chai](https://www.chaijs.com/), you should at least have the    basics knowlodge of the framework before you can fiddle    around the test codes.
+
 
 # The following are the API end points
 
