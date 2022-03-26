@@ -224,7 +224,6 @@ describe("User routes", function () {
                     .then((res) => {
                         expect(res.text).to.include('not found')
                         expect(res.statusCode).to.equal(404)
-
                         done()
                     }).catch((err) => done(err))
             });
