@@ -43,7 +43,12 @@ app.use(passport.session());
 
 app.use('/api', route);
 app.use('/api/tech-buddy/docs', SwaggerUI.serve, SwaggerUI.setup(swagggerSpecs))
-
+app.use((req,res,next)=>{
+    return res.status(404).json({error:'not found'});
+ })
+app.use((err,req,res,next)=>{
+   return res.status(500).json({error:err});
+})
 
 
 module.exports = app;
