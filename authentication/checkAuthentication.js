@@ -1,12 +1,8 @@
- function checkAuthentication (req,res,next){
-    if(req.isAuthenticated()){
-        console.log("auth"+req.user._id)
-          //res.send("authenticated")
-       return next()
-    }else{
-        console.log("not auth")
-         
-        return  res.send("Not authenticated")
+function checkAuthentication(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    } else {
+        return res.status(401).send("Not authenticated")
     }
 }
 

@@ -4,17 +4,23 @@ const mongoose = require('mongoose');
 const imageSchema = new mongoose.Schema({
     name: String,
     url: String,
-    cloundinary_key: String,
+    cloudinary_key: String,
+    path: String,
+    description: String,
+    date: { type: Date,default: Date.now}
 });
 const videoSchema = new mongoose.Schema({
     name: String,
     url: String,
-    cloundinary_key: String,
+    cloudinary_key: String,
+    path: String,
+    description: String,
+    date: {type: Date,default: Date.now}
 });
 const userSchema = new mongoose.Schema({
-    username: String,
-    email: String,
-    password: String,
+    username:{type: String,unique:true, required:true},
+    email: {type: String,unique:true, required:true},
+    password: {type: String, required:true},
     videos:[videoSchema],
     images:[imageSchema]
 
