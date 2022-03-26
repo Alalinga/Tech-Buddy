@@ -1,7 +1,7 @@
 # Tech-Buddy
 
-Is an application program interface (API) that  allow User to
-upload and download assets (images and videos) to and from a content management platform (Cloudinary) respectively. It also includes authentication feature, hence users must register accounts and login before they can perform any operation.
+  Is an application program interface (API) that  allow User to
+  upload and download assets (images and videos) to and from a   content management platform (Cloudinary) respectively. It   also includes authentication feature, hence users must   register accounts and login before they can perform any   operation.
 
 
 ## Features
@@ -14,18 +14,37 @@ upload and download assets (images and videos) to and from a content management 
 ## Technologies
 *  nodejs/express
 *  JavaScript
+*  mongodb
+
+## MongoDb Database configuration
+   Add the database  Url to .env file. Name it `MONGO_URI`
+  example `MONGO_URI=mongodb+srv://username:password@databasename.qtuqn.mongodb.net/table-name?retryWrites=true&w=majority`
+
+## cloudinary configuration
+    Add your cloudinary details to .env file
+* CLOUDINARY_NAME
+* CLOUDINARY_API_KEY
+* CLOUDINARY_API_SECRET
+  example `CLOUDINARY_NAME=wrong CLOUDINARY_API_KEY=404404404404 CLOUDINARY_API_SECRET= wrongsecret234656321`
+
+## Session configuration
+  The API authentication uses session. Hence a secret key is required.
+  Add the key to the .env file and name it `SECRET_KEY`
+  example `SECRET_KEY=mysecret`.
 
 ## install and run the app
- Simply clone the project from github and while in the project folder open a command line and 
-run `npm install express` to install express. After you successfully install express, run `npm start` to start the app. The default port is 5000.
+   Simply clone the project from github and while in the   project folder open a command line and 
+   run `npm install express` to install express. After you   successfully install express, run `npm start` to start the   app. The default port is 5000.
+
+
 
 ## Run test
-The test code is located inside the test folder
-Run `npm test` to execute the test
+   The test code is located inside the test folder
+   Run `npm test` to execute the test. Note that the test    framework used is [Mocha](https://mochajs.org/)  and [chai]   (https://www.chaijs.com/), you should at least have the    basics knowlodge of the framework before you can fiddle    around the test codes.
 
 # The following are the API end points
 
-NOTE: Postman api client is recommended
+   NOTE: Postman api client is recommended
 
 ## Create accounts
 
