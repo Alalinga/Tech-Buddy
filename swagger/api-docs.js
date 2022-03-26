@@ -21,9 +21,6 @@
  *             password:
  *                 type: string
  *                 description: user password must be at least 8 characters
- *             re-password:
- *                 type: string
- *                 description: repeat password, must be equal to user password input
  *       videos:
  *            type: object
  *            properties:
@@ -97,10 +94,24 @@
  *             content:
  *                application/json:
  *                      schema:
- *                         $ref: '#components/schemas/user'
+ *                         type: object
+ *                         required:
+ *                            - username
+ *                            - email
+ *                            - password
+ *                         properties:
+ *                            email:
+ *                              type: string
+ *                              description: user email
+ *                            username:
+ *                              type: string
+ *                              description: full name of the user
+ *                            password:
+ *                              type: string
+ *                              description: user password
  *
  *       responses:
- *          200:
+ *          201:
  *             description:  accounts created succesfully
  *             content:
  *                application/json:
@@ -109,7 +120,7 @@
  *          503:
  *            description: user could not be created
  *          500:
- *            description: There was a server error
+ *            description: server error
  */
 
 /**
@@ -149,7 +160,7 @@
  *          503:
  *            description: user could not be created
  *          500:
- *            description: There was a server error
+ *            description: server error
  */
 
 
@@ -192,7 +203,7 @@
  *          503:
  *            description: video(s) could not be uploaded
  *          500:
- *            description: There was a server error
+ *            description: server error
  */
 
 /**
@@ -235,7 +246,7 @@
  *          503:
  *            description: images(s) could not be uploaded
  *          500:
- *            description: There was a server error
+ *            description: server error
  */
 
 
