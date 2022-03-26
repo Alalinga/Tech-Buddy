@@ -9,7 +9,7 @@ module.exports={
       },
       servers:[
         {url:"http://localhost:5000"},
-        // {url:"https://alalinga.herokuapp.com"}
+        {url:"https://tec-buddy.herokuapp.com"}
       ]
       
     },
