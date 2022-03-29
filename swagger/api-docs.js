@@ -223,7 +223,7 @@
 
  *
  *       responses:
- *          200:
+ *          201:
  *             description: images(s) uploaded succesfully
  *             content:
  *                application/json:
@@ -247,7 +247,7 @@
  *       tags: [Users]
  *
  *       responses:
- *          200:
+ *          201:
  *             description: fetched all videos from server
  *             content:
  *                application/json:
