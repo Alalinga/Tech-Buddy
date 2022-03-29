@@ -191,7 +191,7 @@
  *                                description: description of the videos
  *
  *       responses:
- *          200:
+ *          201:
  *             description: video(s) uploaded succesfully
  *             content:
  *                application/json:
@@ -258,7 +258,7 @@
  *       tags: [Users]
  *
  *       responses:
- *          201:
+ *          200:
  *             description: fetched all videos from server
  *             content:
  *                application/json:
