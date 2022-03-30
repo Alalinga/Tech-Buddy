@@ -59,7 +59,6 @@ describe("User routes", function () {
                     expect(res.error.message).to.include('is required')
                     done()
                 }).catch((err) => done(err))
-
         });
         it("POST, Should not create user without email", function () {
             request(app).post("/api/create-accounts")
