@@ -31,6 +31,7 @@
   The API authentication uses session. Hence a secret key is required.
   Add the key to the .env file and name it `SECRET_KEY`
   example `SECRET_KEY=mysecret`.
+  NOTE: check the sample.env file
 
 ## install and run the app
    Simply clone the project from github and while in the   project folder open a command line and 
